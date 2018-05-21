@@ -46,7 +46,7 @@ gulp.task('watch', ['browser-sync'], function() {
 
 //таск для очистки директории продакшена
 gulp.task('clean-build', function() {
-    return del.sync('build/*');
+    return del.sync(['build/*', '!build/README.md']);
 });
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
