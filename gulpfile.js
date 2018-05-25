@@ -75,7 +75,7 @@ gulp.task('convertToWebp', function() {
     .pipe(webp({
         quality: 90
     }))
-    .pipe(gulp.dest('build/img/webp'));
+    .pipe(gulp.dest('build/img/webp/'));
 });
 
 //таск для создания спрайтов на основе svg
@@ -92,10 +92,8 @@ gulp.task('createSprite', function() {
 gulp.task('copyFiles', function() {
     return gulp.src([
         'src/fonts/**/*.{woff,woff2}'
-    ], {
-        base: "."
-    }) 
-    .pipe(gulp.dest('build/'));
+    ]) 
+    .pipe(gulp.dest('build/fonts/'));
 });
 
 //таск для очистки директории продакшена
