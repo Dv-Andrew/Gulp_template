@@ -1,6 +1,9 @@
 var gulp        = require('gulp'),
+    run         = require('run-sequence'),
     browserSync = require('browser-sync'),
     plumber     = require('gulp-plumber'),
+    posthtml    = require('gulp-posthtml'),
+    include     = require('posthtml-include'),
     htmlmin     = require('gulp-htmlmin'),
     sass        = require('gulp-sass'),
     postcss     = require('gulp-postcss'), //need for autoprefixer
@@ -29,6 +32,9 @@ gulp.task('browser-sync', function() {
 //таск для генерации html
 gulp.task('generateHtml', function() {
     return gulp.src('src/**/*.html')
+    .pipe(posthtml([
+        include()
+    ]))
     .pipe(htmlmin({
         collapseWhitespace: true
     }))
@@ -82,14 +88,14 @@ gulp.task('createSprite', function() {
     .pipe(gulp.dest('build/img/svg'));
 });
 
-// таск для отслеживания изменений в файлах
-gulp.task('watch', ['browser-sync'], function() {
-    //при сохранении любого sass/scss файла в рабочей директории выполняем таск 'generateCss'
-    gulp.watch('src/sass/**/*.+(sass|scss)', ['generateCss']);
-    // следим за файлами в продакшн директории и при их изменении обновляем браузер
-    gulp.watch('build/**/*.html', browserSync.reload);
-    gulp.watch('build/css/**/*.css', browserSync.reload);
-    gulp.watch('build/js/**/*.js', browserSync.reload);
+//таск для копирования файлов в build
+gulp.task('copyFiles', function() {
+    return gulp.src([
+        'src/fonts/**/*.{woff,woff2}'
+    ], {
+        base: "."
+    }) 
+    .pipe(gulp.dest('build/'));
 });
 
 //таск для очистки директории продакшена
@@ -98,19 +104,26 @@ gulp.task('clean-build', function() {
 });
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
-gulp.task('build', ['clean-build'], function() {
+gulp.task('build', ['clean-build'], function(done) {
+    run(
+        'clean-build',
+        'generateHtml',
+        'generateCss',
+        'minifyImg',
+        'convertToWebp',
+        'createSprite',
+        'copyFiles',
+        done
+    );
+});
 
-    //перенос и минификация стилей
-    var buildCss = gulp.src(['src/css/**/style.css'])
-    .pipe(cleanCss())
-    .pipe(gulp.dest('build/css'));
-
-    //перенос скриптов
-    var buildJs = gulp.src(['src/js/**/*.js'])
-    .pipe(gulp.dest('build/js'));
-
-    //перенос шрифтов
-    var buildFonts = gulp.src(['src/fonts/**/*'])
-    .pipe(gulp.dest('build/fonts'));
-    
+// таск для отслеживания изменений в файлах
+gulp.task('watch', ['browser-sync'], function() {
+    //при сохранении любого sass/scss, html файла в рабочей директории выполняем соответствующий таск
+    gulp.watch('src/**/*.html', ['generateHtml']);
+    gulp.watch('src/sass/**/*.+(sass|scss)', ['generateCss']);
+    // следим за файлами в продакшн директории и при их изменении обновляем браузер
+    gulp.watch('build/**/*.html', browserSync.reload);
+    gulp.watch('build/css/**/*.css', browserSync.reload);
+    gulp.watch('build/js/**/*.js', browserSync.reload);
 });
