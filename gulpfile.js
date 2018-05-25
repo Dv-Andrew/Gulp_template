@@ -7,6 +7,7 @@ var gulp        = require('gulp'),
     autoprefixer= require('autoprefixer'),
     cleanCss    = require('gulp-clean-css'), //minify css
     imagemin    = require('gulp-imagemin'),
+    webp        = require('gulp-webp'),
     concat      = require('gulp-concat'),
     rename      = require('gulp-rename'),
     del         = require('del');
@@ -61,6 +62,15 @@ gulp.task('minifyImg', function() {
     .pipe(gulp.dest('build/img'));
 });
 
+//таск для конвертации изображений в webp
+gulp.task('convertToWebp', function() {
+    return gulp.src('src/img/**/*.{png,jpg}')
+    .pipe(webp({
+        quality: 90
+    }))
+    .pipe(gulp.dest('build/img/webp'));
+});
+
 // таск для отслеживания изменений в файлах
 gulp.task('watch', ['browser-sync'], function() {
     //при сохранении любого sass/scss файла в рабочей директории выполняем таск 'generateCss'
@@ -92,27 +102,4 @@ gulp.task('build', ['clean-build'], function() {
     var buildFonts = gulp.src(['src/fonts/**/*'])
     .pipe(gulp.dest('build/fonts'));
     
-    //перенос и минификация изображений
-    var buildJpg = gulp.src(['src/img/**/*.jpg'])
-    .pipe(imagemin([
-        imagemin.jpegtran({
-            progressive: true
-        })
-    ]))
-    .pipe(gulp.dest('build/img'));
-
-    var buildPng = gulp.src(['src/img/**/*.png'])
-    .pipe(imagemin())
-    .pipe(gulp.dest('build/img'));
-
-    var buildSvg = gulp.src(['src/img/**/*.svg'])
-    .pipe(imagemin([
-        imagemin.svgo({
-            plugins: [
-                {removeViewBox: true},
-                {cleanupIDs: false}
-            ]
-        })
-    ]))
-    .pipe(gulp.dest('build/img'));
 });
