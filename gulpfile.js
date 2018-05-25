@@ -8,6 +8,7 @@ var gulp        = require('gulp'),
     cleanCss    = require('gulp-clean-css'), //minify css
     imagemin    = require('gulp-imagemin'),
     webp        = require('gulp-webp'),
+    svgstore    = require('gulp-svgstore'),
     concat      = require('gulp-concat'),
     rename      = require('gulp-rename'),
     del         = require('del');
@@ -69,6 +70,16 @@ gulp.task('convertToWebp', function() {
         quality: 90
     }))
     .pipe(gulp.dest('build/img/webp'));
+});
+
+//таск для создания спрайтов на основе svg
+gulp.task('createSprite', function() {
+    return gulp.src('build/img/svg/sprite/*.svg') //работаю сразу с папкой продакшена, т.к. подразумевается, что предварительно svg были оптимизированный таском minifyImg
+    .pipe(svgstore({
+        inlineSvg: true
+    }))
+    .pipe(rename('sprite.svg'))
+    .pipe(gulp.dest('build/img/svg'));
 });
 
 // таск для отслеживания изменений в файлах
