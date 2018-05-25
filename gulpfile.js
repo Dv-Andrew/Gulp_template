@@ -25,7 +25,7 @@ gulp.task('browser-sync', function() {
 });
 
 //таск для компиляции sass в css
-gulp.task('compilSass', function() {
+gulp.task('generateCss', function() {
     //в style.sass|scss записываем импорты, из них компилируется один style.css файл
     return gulp.src('src/sass/**/style.+(sass|scss)')
     .pipe(plumber())
@@ -43,8 +43,8 @@ gulp.task('compilSass', function() {
 
 // таск для отслеживания изменений в файлах
 gulp.task('watch', ['browser-sync'], function() {
-    //при сохранении любого sass/scss файла в рабочей директории выполняем таск 'compilSass'
-    gulp.watch('src/sass/**/*.+(sass|scss)', ['compilSass']);
+    //при сохранении любого sass/scss файла в рабочей директории выполняем таск 'generateCss'
+    gulp.watch('src/sass/**/*.+(sass|scss)', ['generateCss']);
     // следим за файлами в продакшн директории и при их изменении обновляем браузер
     gulp.watch('build/**/*.html', browserSync.reload);
     gulp.watch('build/css/**/*.css', browserSync.reload);
