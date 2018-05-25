@@ -50,6 +50,17 @@ gulp.task('generateCss', function() {
     .pipe(gulp.dest('build/css'));
 });
 
+//таск для минификации изображений
+gulp.task('minifyImg', function() {
+    return gulp.src('src/img/**/*.{png,jpg,svg}')
+    .pipe(imagemin([
+        imagemin.optipng({optimizationLevel: 3}),
+        imagemin.jpegtran({progressive: true}),
+        imagemin.svgo()
+    ]))
+    .pipe(gulp.dest('build/img'));
+});
+
 // таск для отслеживания изменений в файлах
 gulp.task('watch', ['browser-sync'], function() {
     //при сохранении любого sass/scss файла в рабочей директории выполняем таск 'generateCss'
