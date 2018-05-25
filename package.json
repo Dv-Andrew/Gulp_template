@@ -24,7 +24,8 @@
     "gulp-sass": "^4.0.1",
     "gulp-svgstore": "^6.1.1",
     "gulp-webp": "^3.0.0",
-    "posthtml-include": "^1.1.0"
+    "posthtml-include": "^1.1.0",
+    "run-sequence": "^2.2.1"
   },
   "dependencies": {
     "hoek": "^5.0.3"
