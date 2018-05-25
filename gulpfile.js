@@ -1,5 +1,6 @@
 var gulp        = require('gulp'),
     browserSync = require('browser-sync'),
+    plumber     = require('gulp-plumber'),
     htmlmin     = require('gulp-htmlmin'),
     sass        = require('gulp-sass'),
     postcss     = require('gulp-postcss'), //need for autoprefixer
@@ -27,26 +28,32 @@ gulp.task('browser-sync', function() {
 gulp.task('compilSass', function() {
     //в style.sass|scss записываем импорты, из них компилируется один style.css файл
     return gulp.src('src/sass/**/style.+(sass|scss)')
+    .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([autoprefixer({ //автоматически добавляем вендорные префиксы
         grid: true //поддержка гридов для IE
     })]))
-    .pipe(gulp.dest('src/css'));
+    .pipe(gulp.dest('src/css'))
+    .pipe(cleanCss())
+    .pipe(rename({
+        suffix: ".min"
+    }))
+    .pipe(gulp.dest('build/css'));
 });
 
 // таск для отслеживания изменений в файлах
 gulp.task('watch', ['browser-sync'], function() {
     //при сохранении любого sass/scss файла в рабочей директории выполняем таск 'compilSass'
     gulp.watch('src/sass/**/*.+(sass|scss)', ['compilSass']);
-    // следим за файлами в рабочей директории и при их изменении обновляем браузер
-    gulp.watch('src/**/*.html', browserSync.reload);
-    gulp.watch('src/css/**/*.css', browserSync.reload);
-    gulp.watch('src/js/**/*.js', browserSync.reload);
+    // следим за файлами в продакшн директории и при их изменении обновляем браузер
+    gulp.watch('build/**/*.html', browserSync.reload);
+    gulp.watch('build/css/**/*.css', browserSync.reload);
+    gulp.watch('build/js/**/*.js', browserSync.reload);
 });
 
 //таск для очистки директории продакшена
 gulp.task('clean-build', function() {
-    return del.sync(['build/*', '!build/README.md']);
+    return del.sync('build/*');
 });
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
