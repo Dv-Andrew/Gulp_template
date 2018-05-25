@@ -18,13 +18,22 @@ gulp.task('default', ['watch']);
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
-            baseDir: "src"
+            baseDir: "build"
         },
         notify: false
     });
 });
 
-//таск для компиляции sass в css
+//таск для генерации html
+gulp.task('generateHtml', function() {
+    return gulp.src('src/**/*.html')
+    .pipe(htmlmin({
+        collapseWhitespace: true
+    }))
+    .pipe(gulp.dest('build'));
+});
+
+//таск для генерации css
 gulp.task('generateCss', function() {
     //в style.sass|scss записываем импорты, из них компилируется один style.css файл
     return gulp.src('src/sass/**/style.+(sass|scss)')
@@ -58,13 +67,6 @@ gulp.task('clean-build', function() {
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
 gulp.task('build', ['clean-build'], function() {
-    
-    //перенос и минификация разметки
-    var buildHtml = gulp.src(['src/**/*.html'])
-    .pipe(htmlmin({
-        collapseWhitespace: true
-    }))
-    .pipe(gulp.dest('build'));
 
     //перенос и минификация стилей
     var buildCss = gulp.src(['src/css/**/style.css'])
