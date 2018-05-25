@@ -20,7 +20,8 @@
     "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^7.0.1",
     "gulp-rename": "^1.2.3",
-    "gulp-sass": "^4.0.1"
+    "gulp-sass": "^4.0.1",
+    "gulp-webp": "^3.0.0"
   },
   "dependencies": {
     "hoek": "^5.0.3"
