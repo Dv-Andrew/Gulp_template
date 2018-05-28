@@ -28,8 +28,6 @@ gulp.task('createDirectories', function() {
     .pipe(gulp.dest('./src/css'))
     .pipe(gulp.dest('./src/fonts'))
     .pipe(gulp.dest('./src/img'))
-    .pipe(gulp.dest('./src/img/jpg'))
-    .pipe(gulp.dest('./src/img/png'))
     .pipe(gulp.dest('./src/img/svg'))
     .pipe(gulp.dest('./src/img/svg/sprite'))
     .pipe(gulp.dest('./src/js'))
