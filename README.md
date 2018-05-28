@@ -36,4 +36,4 @@
 
 ### Особенности
 1. К странице необходимо подключать файлы стилей с суффиксом ".min". Пример:
-    `link rel="stylesheet" href="css/style.min.css`
+    `link rel="stylesheet" href="css/style.min.css"`
