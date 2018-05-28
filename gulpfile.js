@@ -44,7 +44,7 @@ gulp.task('createFiles', function() {
     var css = file('style.css', '', { src: true })
     .pipe(gulp.dest('./src/css'));
 
-    var scss = file('style.scss', '@import \'example.scss\';', { src: true })
+    var scss = file('style.scss', '', { src: true })
     .pipe(gulp.dest('./src/sass'));
 
     return merge(html, css, scss);
@@ -132,15 +132,6 @@ gulp.task('clean-build', function() {
     return del.sync('build/*');
 });
 
-//таск для создания первичной структуры проекта
-gulp.task('startNewProject', function(done) {
-    run(
-        'createDirectories',
-        'createFiles',
-        done
-    );
-});
-
 // таск для компиляции, минификации и сборки всего проекта для продакшена
 gulp.task('build', ['clean-build'], function(done) {
     run(
@@ -151,6 +142,16 @@ gulp.task('build', ['clean-build'], function(done) {
         'convertToWebp',
         'createSprite',
         'copyFiles',
+        done
+    );
+});
+
+//таск для создания первичной структуры проекта
+gulp.task('startNewProject', function(done) {
+    run(
+        'createDirectories',
+        'createFiles',
+        'build',
         done
     );
 });
