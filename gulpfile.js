@@ -12,12 +12,43 @@ var gulp        = require('gulp'),
     imagemin    = require('gulp-imagemin'),
     webp        = require('gulp-webp'),
     svgstore    = require('gulp-svgstore'),
+    file        = require('gulp-file'),
     concat      = require('gulp-concat'),
     rename      = require('gulp-rename'),
-    del         = require('del');
+    del         = require('del'),
+    merge       = require('merge-stream');
 
 //дефолтный таск
 gulp.task('default', ['watch']);
+
+//таск для создания директорий проекта
+gulp.task('createDirectories', function() {
+    return gulp.src("*.*", {read: false})
+    .pipe(gulp.dest('./build'))
+    .pipe(gulp.dest('./src/css'))
+    .pipe(gulp.dest('./src/fonts'))
+    .pipe(gulp.dest('./src/img'))
+    .pipe(gulp.dest('./src/img/jpg'))
+    .pipe(gulp.dest('./src/img/png'))
+    .pipe(gulp.dest('./src/img/svg'))
+    .pipe(gulp.dest('./src/img/svg/sprite'))
+    .pipe(gulp.dest('./src/js'))
+    .pipe(gulp.dest('./src/sass'));
+});
+
+//таск для создания начальных файлов проекта
+gulp.task('createFiles', function() {
+    var html = file('index.html', '', { src: true })
+    .pipe(gulp.dest('./src'));
+
+    var css = file('style.css', '', { src: true })
+    .pipe(gulp.dest('./src/css'));
+
+    var scss = file('style.scss', '@import \'example.scss\';', { src: true })
+    .pipe(gulp.dest('./src/sass'));
+
+    return merge(html, css, scss);
+});
 
 // таск для отображения процесса разработки в браузере
 gulp.task('browser-sync', function() {
@@ -99,6 +130,15 @@ gulp.task('copyFiles', function() {
 //таск для очистки директории продакшена
 gulp.task('clean-build', function() {
     return del.sync('build/*');
+});
+
+//таск для создания первичной структуры проекта
+gulp.task('startNewProject', function(done) {
+    run(
+        'createDirectories',
+        'createFiles',
+        done
+    );
 });
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
