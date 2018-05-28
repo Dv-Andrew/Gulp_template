@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Dv_Andrew",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^8.5.0",
+    "autoprefixer": "^8.5.1",
     "browser-sync": "^2.24.4",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
@@ -25,8 +22,18 @@
     "gulp-sass": "^4.0.1",
     "gulp-svgstore": "^6.1.1",
     "gulp-webp": "^3.0.0",
+    "merge-stream": "^1.0.1",
     "posthtml-include": "^1.1.0",
     "run-sequence": "^2.2.1"
   },
-  "dependencies": {}
+  "browserslist": [
+    "last 2 versions",
+    "IE 11",
+    "Firefox ESR"
+  ],
+  "scripts": {
+    "startNewProject": "gulp startNewProject",
+    "watch": "gulp watch",
+    "build": "gulp build"
+  }
 }
