@@ -134,11 +134,11 @@ gulp.task('clean-build', function() {
 gulp.task('build', ['clean-build'], function(done) {
     run(
         'clean-build',
-        'generateHtml',
-        'generateCss',
         'minifyImg',
         'convertToWebp',
         'createSprite',
+        'generateHtml',
+        'generateCss',
         'copyFiles',
         done
     );
