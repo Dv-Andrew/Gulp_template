@@ -129,6 +129,9 @@ gulp.task('copyFiles', function() {
 gulp.task('clean-build', function() {
     return del.sync('build/*');
 });
+gulp.task('clean-buildSprite', function() {
+    return del.sync('build/img/svg/sprite');
+});
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
 gulp.task('build', ['clean-build'], function(done) {
@@ -137,6 +140,7 @@ gulp.task('build', ['clean-build'], function(done) {
         'minifyImg',
         'convertToWebp',
         'createSprite',
+        'clean-buildSprite',
         'generateHtml',
         'generateCss',
         'copyFiles',
