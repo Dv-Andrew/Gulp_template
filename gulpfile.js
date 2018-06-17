@@ -9,11 +9,12 @@ var gulp        = require('gulp'),
     postcss     = require('gulp-postcss'), //need for autoprefixer
     autoprefixer= require('autoprefixer'),
     cleanCss    = require('gulp-clean-css'), //minify css
+    uglify      = require('gulp-uglify'),
     imagemin    = require('gulp-imagemin'),
     webp        = require('gulp-webp'),
     svgstore    = require('gulp-svgstore'),
     file        = require('gulp-file'),
-    concat      = require('gulp-concat'),
+    concat      = require("gulp-concat"),
     rename      = require('gulp-rename'),
     del         = require('del'),
     merge       = require('merge-stream');
@@ -58,8 +59,8 @@ gulp.task('browser-sync', function() {
     });
 });
 
-//таск для генерации html
-gulp.task('generateHtml', function() {
+//таск для генерации HTML
+gulp.task('generateHTML', function() {
     return gulp.src('src/**/*.html')
     .pipe(posthtml([
         include()
@@ -70,8 +71,8 @@ gulp.task('generateHtml', function() {
     .pipe(gulp.dest('build'));
 });
 
-//таск для генерации css
-gulp.task('generateCss', function() {
+//таск для генерации CSS
+gulp.task('generateCSS', function() {
     //в style.sass|scss записываем импорты, из них компилируется один style.css файл
     return gulp.src('src/sass/**/style.+(sass|scss)')
     .pipe(plumber())
@@ -85,6 +86,16 @@ gulp.task('generateCss', function() {
         suffix: ".min"
     }))
     .pipe(gulp.dest('build/css'));
+});
+
+//таск для генерации JavaScript
+gulp.task('generateJS', function() {
+    return gulp.src('src/js/**/*.js')
+    .pipe(uglify())
+    .pipe(rename({
+        suffix: ".min"
+    }))
+    .pipe(gulp.dest('build/js'));
 });
 
 //таск для минификации изображений
@@ -129,16 +140,21 @@ gulp.task('copyFiles', function() {
 gulp.task('clean-build', function() {
     return del.sync('build/*');
 });
+gulp.task('clean-buildSprite', function() {
+    return del.sync('build/img/svg/sprite');
+});
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
 gulp.task('build', ['clean-build'], function(done) {
     run(
         'clean-build',
-        'generateHtml',
-        'generateCss',
         'minifyImg',
         'convertToWebp',
         'createSprite',
+        'clean-buildSprite',
+        'generateHTML',
+        'generateCSS',
+        'generateJS',
         'copyFiles',
         done
     );
@@ -157,8 +173,10 @@ gulp.task('startNewProject', function(done) {
 // таск для отслеживания изменений в файлах
 gulp.task('watch', ['browser-sync'], function() {
     //при сохранении любого sass/scss, html файла в рабочей директории выполняем соответствующий таск
-    gulp.watch('src/**/*.html', ['generateHtml']);
-    gulp.watch('src/sass/**/*.+(sass|scss)', ['generateCss']);
+    gulp.watch('src/**/*.html', ['generateHTML']);
+    gulp.watch('src/sass/**/*.+(sass|scss)', ['generateCSS']);
+    gulp.watch('src/js/**/*.js', ['generateJS']);
+
     // следим за файлами в продакшн директории и при их изменении обновляем браузер
     gulp.watch('build/**/*.html', browserSync.reload);
     gulp.watch('build/css/**/*.css', browserSync.reload);
