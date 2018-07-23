@@ -6,7 +6,7 @@
   "author": "Dv_Andrew",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^8.5.1",
+    "autoprefixer": "^9.0.1",
     "browser-sync": "^2.24.4",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
