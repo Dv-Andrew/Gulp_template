@@ -6,9 +6,9 @@ var gulp        = require('gulp'),
     include     = require('posthtml-include'),
     htmlmin     = require('gulp-htmlmin'),
     sass        = require('gulp-sass'),
-    postcss     = require('gulp-postcss'), //need for autoprefixer
+    postcss     = require('gulp-postcss'),
     autoprefixer= require('autoprefixer'),
-    cleanCss    = require('gulp-clean-css'), //minify css
+    cleanCss    = require('gulp-clean-css'),
     uglify      = require('gulp-uglify'),
     imagemin    = require('gulp-imagemin'),
     webp        = require('gulp-webp'),
@@ -78,7 +78,6 @@ gulp.task('generateCSS', function() {
     .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([autoprefixer({ //автоматически добавляем вендорные префиксы
-        grid: true //поддержка гридов для IE
     })]))
     .pipe(gulp.dest('src/css'))
     .pipe(cleanCss())
