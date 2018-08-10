@@ -181,6 +181,9 @@ gulp.task('clean-build', function() {
 gulp.task('clean-buildSprite', function() {
     return del('build/img/svg/sprite');
 });
+gulp.task('clean-buildSprite', function() {
+    return del.sync('build/img/svg/sprite');
+});
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
 gulp.task('build',
@@ -201,6 +204,7 @@ gulp.task('build',
 // таск для создания первичной структуры проекта
 gulp.task('startNewProject', 
     gulp.series(
+
         'createDirectories',
         'createFiles',
         'build'
