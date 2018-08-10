@@ -24,6 +24,11 @@ const   gulp        = require('gulp'),
         del         = require('del'),
         merge       = require('merge-stream');
 
+// webpack:
+// const   webpackStream   = require('webpack-stream'),
+//         webpack         = webpackStream.webpack,
+//         named           = require('vinyl-named');
+
 // проверяем на какой стадии проект:
 const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV == 'development';
 // для продакшена можно использовать команду: "set NODE_ENV=production && gulp ComandName"
@@ -78,9 +83,9 @@ gulp.task('generateHTML', function() {
     .pipe(posthtml([
         include()
     ]))
-    .pipe(htmlmin({
+    .pipe(gulpIf(!isDevelopment, htmlmin({
         collapseWhitespace: true
-    }))
+    })))
     .pipe(gulp.dest('build'));
 });
 
@@ -102,8 +107,8 @@ gulp.task('generateCSS', function() {
     .pipe(postcss([autoprefixer({ //автоматически добавляем вендорные префиксы
     })]))
     .pipe(gulp.dest('src/css'))
-    .pipe(cleanCss())
-    .pipe(rename({
+    .pipe(gulpIf(!isDevelopment, cleanCss()))
+    .pipe(rename({ //надо доработать эту глупость, но пока "и таак сойдёт"
         suffix: ".min"
     }))
     .pipe(gulpIf(isDevelopment, sourcemaps.write()))
@@ -122,8 +127,8 @@ gulp.task('generateJS', function() {
         })
     }))
     .pipe(newer('build/js'))
-    .pipe(uglify())
-    .pipe(rename({
+    .pipe(gulpIf(!isDevelopment, uglify()))
+    .pipe(rename({ //надо доработать эту глупость, но пока "и таак сойдёт"
         suffix: ".min"
     }))
     .pipe(gulp.dest('build/js'));
