@@ -16,6 +16,7 @@
     "gulp-htmlmin": "^4.0.0",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^4.1.0",
+    "gulp-newer": "^1.4.0",
     "gulp-plumber": "^1.2.0",
     "gulp-postcss": "^8.0.0",
     "gulp-posthtml": "^3.0.4",
@@ -35,8 +36,10 @@
     "Firefox ESR"
   ],
   "scripts": {
+    "gulp": "./node_modules/.bin/gulp",
     "startNewProject": "gulp startNewProject",
     "watch": "gulp watch",
-    "build": "gulp build"
+    "build": "gulp build",
+    "dev": "gulp dev"
   }
 }
