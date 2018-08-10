@@ -4,8 +4,9 @@ const   gulp        = require('gulp'),
         sourcemaps  = require('gulp-sourcemaps'),
         gulpIf      = require('gulp-if'),
         newer       = require('gulp-newer'),
-        browserSync = require('browser-sync'),
+        notify      = require('gulp-notify'),
         plumber     = require('gulp-plumber'),
+        browserSync = require('browser-sync'),
         htmlmin     = require('gulp-htmlmin'),
         posthtml    = require('gulp-posthtml'),
         include     = require('posthtml-include'),
@@ -65,25 +66,38 @@ gulp.task('createFiles', function() {
 // таск для генерации HTML
 gulp.task('generateHTML', function() {
     return gulp.src('src/**/*.html', {since: gulp.lastRun('generateHTML')})
+    .pipe(plumber({
+        errorHandler: notify.onError(function (err) {
+            return {
+                title: 'Error in HTML',
+                message: err.message
+            };
+        })
+    }))
     .pipe(newer('build'))
-    .pipe(gulpIf(isDevelopment, sourcemaps.init()))
     .pipe(posthtml([
         include()
     ]))
     .pipe(htmlmin({
         collapseWhitespace: true
     }))
-    .pipe(gulpIf(isDevelopment, sourcemaps.write()))
     .pipe(gulp.dest('build'));
 });
 
 // таск для генерации CSS
 gulp.task('generateCSS', function() {
     //в style.sass|scss записываем импорты, из них компилируется один style.css файл
-    return gulp.src('src/sass/**/style.+(sass|scss)', {since: gulp.lastRun('generateCSS')})
+    return gulp.src('src/sass/**/style.+(sass|scss)')
+    .pipe(plumber({
+        errorHandler: notify.onError(function (err) {
+            return {
+                title: 'Error in Styles',
+                message: err.message
+            };
+        })
+    }))
     .pipe(newer('build/css'))
     .pipe(gulpIf(isDevelopment, sourcemaps.init()))
-    .pipe(plumber())
     .pipe(sass())
     .pipe(postcss([autoprefixer({ //автоматически добавляем вендорные префиксы
     })]))
@@ -99,6 +113,14 @@ gulp.task('generateCSS', function() {
 // таск для генерации JavaScript
 gulp.task('generateJS', function() {
     return gulp.src('src/js/**/*.js', {since: gulp.lastRun('generateJS')})
+    .pipe(plumber({
+        errorHandler: notify.onError(function (err) {
+            return {
+                title: 'Error in JS',
+                message: err.message
+            };
+        })
+    }))
     .pipe(newer('build/js'))
     .pipe(uglify())
     .pipe(rename({
@@ -211,4 +233,5 @@ gulp.task('dev',
             'watch',
             'server'
         )
-));
+    )
+);
