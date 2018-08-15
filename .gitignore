@@ -5,5 +5,4 @@
 node_modules/*
 /build/*
 /src/css/**/*.css
-package-lock.json
 !README.md
