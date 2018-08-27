@@ -177,7 +177,6 @@ gulp.task('copyFiles', function() {
 gulp.task('clean-build', function(callback) {
     if (isDevelopment) { // лол, даже не знаю законно ли использовать такие условия в gulp'e, но это работает
         del('build/*');
-        del('public');
     } else {
         del('build');
         del('public/*');
