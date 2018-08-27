@@ -86,7 +86,7 @@ gulp.task('generateHTML', function() {
         collapseWhitespace: true
     })))
     .pipe(gulpIf(isDevelopment, gulp.dest('build')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs')));
 });
 
 // таск для генерации CSS
@@ -110,7 +110,7 @@ gulp.task('generateCSS', function() {
     .pipe(gulpIf(!isDevelopment, cleanCss()))
     .pipe(gulpIf(isDevelopment, sourcemaps.write()))
     .pipe(gulpIf(isDevelopment, gulp.dest('build/css')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public/css')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs/css')));
 });
 
 // таск для генерации JavaScript
@@ -126,7 +126,7 @@ gulp.task('generateJS', function() {
     }))
     .pipe(newer('build/js')) // пока js оставлю без обработки, как я понял тут нужно для начала разобраться с webpack
     .pipe(gulpIf(isDevelopment, gulp.dest('build/js')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public/js')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs/js')));
 });
 
 // таск для минификации изображений
@@ -139,7 +139,7 @@ gulp.task('minifyImg', function() {
         imagemin.svgo()
     ]))
     .pipe(gulpIf(isDevelopment, gulp.dest('build/img')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public/img')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs/img')));
 });
 
 // таск для конвертации изображений в webp
@@ -150,7 +150,7 @@ gulp.task('convertToWebp', function() {
         quality: 90
     }))
     .pipe(gulpIf(isDevelopment, gulp.dest('build/img/webp/')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public/img/webp/')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs/img/webp/')));
 });
 
 // таск для создания спрайтов на основе svg
@@ -161,7 +161,7 @@ gulp.task('createSprite', function() {
     }))
     .pipe(rename('sprite.svg'))
     .pipe(gulpIf(isDevelopment, gulp.dest('build/img/svg')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public/img/svg')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs/img/svg')));
 });
 
 // таск для копирования файлов в build
@@ -170,7 +170,7 @@ gulp.task('copyFiles', function() {
         'src/fonts/**/*.{woff,woff2}' // пока только шрифты
     ])
     .pipe(gulpIf(isDevelopment, gulp.dest('build/fonts/')))
-    .pipe(gulpIf(!isDevelopment, gulp.dest('public/fonts/')));
+    .pipe(gulpIf(!isDevelopment, gulp.dest('docs/fonts/')));
 });
 
 // таск для очистки директории билда
@@ -179,7 +179,7 @@ gulp.task('clean-build', function(callback) {
         del('build/*');
     } else {
         del('build');
-        del('public/*');
+        del('docs/*');
     }
     callback();
 });
@@ -188,7 +188,7 @@ gulp.task('clean-buildSprite', function(callback) {
         del('build/img/svg/sprite');
     } else {
         del('build/img/svg/sprite');
-        del('public/img/svg/sprite');
+        del('docs/img/svg/sprite');
     }
     callback();
 });
