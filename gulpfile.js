@@ -14,7 +14,6 @@ const   gulp        = require('gulp'),
         postcss     = require('gulp-postcss'),
         autoprefixer= require('autoprefixer'),
         cleanCss    = require('gulp-clean-css'),
-        uglify      = require('gulp-uglify'),
         imagemin    = require('gulp-imagemin'),
         webp        = require('gulp-webp'),
         svgstore    = require('gulp-svgstore'),
@@ -86,7 +85,8 @@ gulp.task('generateHTML', function() {
     .pipe(gulpIf(!isDevelopment, htmlmin({
         collapseWhitespace: true
     })))
-    .pipe(gulp.dest('build'));
+    .pipe(gulpIf(isDevelopment, gulp.dest('build')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public')));
 });
 
 // таск для генерации CSS
@@ -108,11 +108,9 @@ gulp.task('generateCSS', function() {
     })]))
     .pipe(gulp.dest('src/css'))
     .pipe(gulpIf(!isDevelopment, cleanCss()))
-    .pipe(rename({ //надо доработать эту глупость, но пока "и таак сойдёт"
-        suffix: ".min"
-    }))
     .pipe(gulpIf(isDevelopment, sourcemaps.write()))
-    .pipe(gulp.dest('build/css'));
+    .pipe(gulpIf(isDevelopment, gulp.dest('build/css')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public/css')));
 });
 
 // таск для генерации JavaScript
@@ -126,12 +124,9 @@ gulp.task('generateJS', function() {
             };
         })
     }))
-    .pipe(newer('build/js'))
-    .pipe(gulpIf(!isDevelopment, uglify()))
-    .pipe(rename({ //надо доработать эту глупость, но пока "и таак сойдёт"
-        suffix: ".min"
-    }))
-    .pipe(gulp.dest('build/js'));
+    .pipe(newer('build/js')) // пока js оставлю без обработки, как я понял тут нужно для начала разобраться с webpack
+    .pipe(gulpIf(isDevelopment, gulp.dest('build/js')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public/js')));
 });
 
 // таск для минификации изображений
@@ -143,7 +138,8 @@ gulp.task('minifyImg', function() {
         imagemin.jpegtran({progressive: true}),
         imagemin.svgo()
     ]))
-    .pipe(gulp.dest('build/img'));
+    .pipe(gulpIf(isDevelopment, gulp.dest('build/img')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public/img')));
 });
 
 // таск для конвертации изображений в webp
@@ -153,7 +149,8 @@ gulp.task('convertToWebp', function() {
     .pipe(webp({
         quality: 90
     }))
-    .pipe(gulp.dest('build/img/webp/'));
+    .pipe(gulpIf(isDevelopment, gulp.dest('build/img/webp/')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public/img/webp/')));
 });
 
 // таск для создания спрайтов на основе svg
@@ -163,23 +160,29 @@ gulp.task('createSprite', function() {
         inlineSvg: true
     }))
     .pipe(rename('sprite.svg'))
-    .pipe(gulp.dest('build/img/svg'));
+    .pipe(gulpIf(isDevelopment, gulp.dest('build/img/svg')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public/img/svg')));
 });
 
 // таск для копирования файлов в build
 gulp.task('copyFiles', function() {
     return gulp.src([
         'src/fonts/**/*.{woff,woff2}' // пока только шрифты
-    ]) 
-    .pipe(gulp.dest('build/fonts/'));
+    ])
+    .pipe(gulpIf(isDevelopment, gulp.dest('build/fonts/')))
+    .pipe(gulpIf(!isDevelopment, gulp.dest('public/fonts/')));
 });
 
-// таск для очистки директории продакшена
-gulp.task('clean-build', function() {
-    return del('build/*');
+// таск для очистки директории билда
+gulp.task('clean-build', function(callback) {
+    del('build/*');
+    del('public');
+    callback();
 });
-gulp.task('clean-buildSprite', function() {
-    return del('build/img/svg/sprite');
+gulp.task('clean-buildSprite', function(callback) {
+    del('build/img/svg/sprite');
+    del('public/img/svg/sprite');
+    callback();
 });
 
 // таск для компиляции, минификации и сборки всего проекта для продакшена
