@@ -175,13 +175,22 @@ gulp.task('copyFiles', function() {
 
 // таск для очистки директории билда
 gulp.task('clean-build', function(callback) {
-    del('build/*');
-    del('public');
+    if (isDevelopment) { // лол, даже не знаю законно ли использовать такие условия в gulp'e, но это работает
+        del('build/*');
+        del('public');
+    } else {
+        del('build');
+        del('public/*');
+    }
     callback();
 });
 gulp.task('clean-buildSprite', function(callback) {
-    del('build/img/svg/sprite');
-    del('public/img/svg/sprite');
+    if (isDevelopment) {
+        del('build/img/svg/sprite');
+    } else {
+        del('build/img/svg/sprite');
+        del('public/img/svg/sprite');
+    }
     callback();
 });
 
