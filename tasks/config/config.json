@@ -1,0 +1,36 @@
+{
+  "root": {
+    "devDir": "./testSrc",
+    "buildDir": "./build",
+    "publicDir": "./docs"
+  },
+
+  "html": {
+    "devDir": "",
+    "buildDir": ""
+  },
+
+  "css": {
+    "devDir": "/css",
+    "buildDir": "/css"
+  },
+  
+  "sass": {
+    "devDir": "/sass"
+  },
+
+  "js": {
+    "devDir": "/js",
+    "buildDir": "/js"
+  },
+
+  "img": {
+    "devDir": "/img",
+    "buildDir": "/img"
+  },
+
+  "fonts": {
+    "devDir": "/fonts",
+    "buildDir": "/fonts"
+  }
+}
