@@ -1,8 +1,8 @@
 {
   "root": {
-    "devDir": "./testSrc",
-    "buildDir": "./build",
-    "publicDir": "./docs"
+    "devDir": "./src/",
+    "buildDir": "./build/",
+    "publicDir": "./docs/"
   },
 
   "html": {
@@ -11,26 +11,43 @@
   },
 
   "css": {
-    "devDir": "/css",
-    "buildDir": "/css"
+    "devDir": "css/",
+    "buildDir": "css/"
   },
-  
+
   "sass": {
-    "devDir": "/sass"
+    "devDir": "sass/",
+    "mainFileName": "style",
+    "extentions": ".+(sass|scss)"
   },
 
   "js": {
-    "devDir": "/js",
-    "buildDir": "/js"
+    "devDir": "js/",
+    "buildDir": "js/"
   },
 
   "img": {
-    "devDir": "/img",
-    "buildDir": "/img"
+    "devDir": "img/",
+    "buildDir": "img/",
+    "extentions": "*.{png,jpg,svg}",
+    "webp": {
+      "convertToWebp": true,
+      "devDir": "",
+      "buildDir": "webp",
+      "extentions": "*.{png,jpg}"
+    },
+    "sprite": {
+      "createSprite": true,
+      "devDir": "sprite/",
+      "buildDir": "sprite/",
+      "extentions": "*.svg",
+      "name": "sprite.svg"
+    }
   },
 
   "fonts": {
-    "devDir": "/fonts",
-    "buildDir": "/fonts"
+    "devDir": "fonts/",
+    "buildDir": "fonts/",
+    "extentions": "*.{woff,woff2}"
   }
 }

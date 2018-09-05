@@ -4,7 +4,7 @@
 const gulp = require('gulp');
 
 const file = require('gulp-file');
-const merge = require('merge-stream')
+const merge = require('merge-stream');
 
 const config = require('./config/config.json');
 
@@ -21,10 +21,10 @@ gulp.task('createFiles', function() {
     .pipe(gulp.dest(`${SRC}${config.sass.devDir}`));
 
   var sassBase = file('_base.scss', '', { src: true })
-    .pipe(gulp.dest(`${SRC}${config.sass.devDir}/base`));
+    .pipe(gulp.dest(`${SRC}${config.sass.devDir}base`));
 
   var sassVariables = file('_variables.scss', '', { src: true })
-    .pipe(gulp.dest(`${SRC}${config.sass.devDir}/base`));
+    .pipe(gulp.dest(`${SRC}${config.sass.devDir}base`));
 
   var js = file('main.js', '', { src: true })
     .pipe(gulp.dest(`${SRC}${config.js.devDir}`));

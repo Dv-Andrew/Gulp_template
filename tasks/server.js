@@ -18,5 +18,5 @@ gulp.task('server', function() {
   });
 
   // следим за файлами в продакшн директории и при их изменении обновляем браузер
-  browserSync.watch(`${SRC}/**/*.*`).on('change', browserSync.reload);
+  browserSync.watch(`${SRC}**/*.*`).on('change', browserSync.reload);
 });
