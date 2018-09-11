@@ -3,7 +3,7 @@
  */
 const gulp = require('gulp');
 
-const config = require('./config/config.json');
+const config = require('../config/config.json');
 
 const SRC = config.root.devDir;
 

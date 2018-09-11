@@ -14,8 +14,8 @@ const autoprefixer = require('autoprefixer');
 const cleanCss = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
 
-const config = require('./config/config.json');
-const mode = require('./config/mode.js');
+const config = require('../config/config.json');
+const mode = require('../config/mode');
 
 const SRC_CSS = path.join(config.root.devDir, config.css.devDir);
 const SRC_SASS = `${path.join(config.root.devDir, config.sass.devDir, '**/')}${config.sass.mainFileName}${config.sass.extentions}`;

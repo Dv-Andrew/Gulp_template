@@ -7,8 +7,7 @@ const path = require('path');
 const svgstore = require('gulp-svgstore');
 const rename = require('gulp-rename');
 
-const config = require('./config/config.json');
-const mode = require('./config/mode.js');
+const config = require('../config/config.json');
 
 const SRC = path.join(config.root.devDir, config.img.devDir, '**/', config.img.sprite.devDir, config.img.sprite.extentions);
 const BUILD = path.join(config.root.devDir, config.img.devDir);

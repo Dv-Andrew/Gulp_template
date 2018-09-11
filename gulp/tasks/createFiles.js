@@ -6,7 +6,7 @@ const gulp = require('gulp');
 const file = require('gulp-file');
 const merge = require('merge-stream');
 
-const config = require('./config/config.json');
+const config = require('../config/config.json');
 
 const SRC = config.root.devDir;
 

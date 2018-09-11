@@ -4,7 +4,7 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync');
 
-const config = require('./config/config.json');
+const config = require('../config/config.json');
 
 const SRC = config.root.buildDir;
 

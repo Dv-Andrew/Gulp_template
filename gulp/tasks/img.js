@@ -7,8 +7,8 @@ const newer = require('gulp-newer');
 
 const imagemin = require('gulp-imagemin');
 
-const config = require('./config/config.json');
-const mode = require('./config/mode.js');
+const config = require('../config/config.json');
+const mode = require('../config/mode');
 
 const SRC = path.join(config.root.devDir, config.img.devDir, '**/', config.img.extentions);
 const SRC_EXCLUDE = config.img.sprite.createSprite ? `!${path.join(config.root.devDir, config.img.devDir, '**/',config.img.sprite.devDir, '**/*')}` : ' ';

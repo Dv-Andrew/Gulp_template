@@ -12,9 +12,9 @@ const webpackStream = require('webpack-stream');
 const named = require('vinyl-named');
 const uglify = require('gulp-uglify');
 
-const config = require('./config/config.json');
-const webpackConfig = require('./config/webpackConfig.js');
-const mode = require('./config/mode.js');
+const config = require('../config/config.json');
+const webpackConfig = require('../config/webpackConfig');
+const mode = require('../config/mode');
 
 const SRC = path.join(config.root.devDir, config.js.devDir, '**/*.js');
 const BUILD = mode.isDevelopment ? path.join(config.root.buildDir, config.js.buildDir) : path.join(config.root.publicDir, config.js.buildDir);

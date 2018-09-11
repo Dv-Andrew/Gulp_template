@@ -3,7 +3,7 @@
 const gulp = require('gulp');
 const requireDir = require('require-dir');
 
-requireDir('./tasks', { recurse: true });
+requireDir('./gulp/tasks', { recurse: true });
 
 /**
  * Building project

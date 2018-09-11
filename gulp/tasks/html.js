@@ -12,8 +12,8 @@ const htmlmin = require('gulp-htmlmin');
 const posthtml = require('gulp-posthtml');
 const include = require('posthtml-include');
 
-const config = require('./config/config.json');
-const mode = require('./config/mode.js');
+const config = require('../config/config.json');
+const mode = require('../config/mode');
 
 const SRC = path.join(config.root.devDir, config.html.devDir, '**/*.html');
 const BUILD = mode.isDevelopment ? path.join(config.root.buildDir, config.html.buildDir) : path.join(config.root.publicDir, config.html.buildDir);
