@@ -3,10 +3,14 @@
  */
 const gulp = require('gulp');
 
-gulp.task('getCurrentEnvironment', function(callback) {
-  console.log('--------------------------------------------');
-  console.log(`Current environment: ${process.env.NODE_ENV}`);
-  console.log('If you want to change environment use:\n\"set NODE_ENV=production/development\"');
-  console.log('--------------------------------------------');
+gulp.task('getCurrentEnvironment', function (callback) {
+  let env = `
+    --------------------------------------------
+    Current environment: ${process.env.NODE_ENV}
+    If you want to change environment use:
+    "set NODE_ENV=production/development"
+    --------------------------------------------
+`;
+  console.log(env);
   callback();
 });
