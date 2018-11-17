@@ -3,7 +3,19 @@
 const gulp = require('gulp');
 const requireDir = require('require-dir');
 
-requireDir('./gulp/tasks', { recurse: true });
+requireDir('./gulp/tasks', {
+  recurse: true
+});
+
+/**
+ * Creating a structure for a new project
+ */
+gulp.task('startNewProject',
+  gulp.series(
+    'createDirectories',
+    'createFiles'
+  )
+);
 
 /**
  * Building project
@@ -20,21 +32,11 @@ gulp.task('build',
       'html',
       'css',
       'webpack')
-  ));
-
-/**
- * Creating a structure for a new project
- */
-gulp.task('startNewProject',
-  gulp.series(
-    'createDirectories',
-    'createFiles',
-    'build'
   )
 );
 
 /**
- * Run development environment
+ * Run development build
  */
 gulp.task('dev',
   gulp.series(
