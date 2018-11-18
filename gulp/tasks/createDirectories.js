@@ -15,5 +15,6 @@ gulp.task('createDirectories', function() {
     .pipe(gulp.dest(`${SRC}${config.js.devDir}libs`))
     .pipe(gulp.dest(`${SRC}${config.js.devDir}modules`))
     .pipe(gulp.dest(`${SRC}${config.img.devDir}svg/sprite`))
-    .pipe(gulp.dest(`${SRC}${config.fonts.devDir}`));
+    .pipe(gulp.dest(`${SRC}${config.fonts.devDir}`))
+    .pipe(gulp.dest(`${SRC}${config.assets.devDir}`));
 });

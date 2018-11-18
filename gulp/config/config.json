@@ -49,5 +49,10 @@
     "devDir": "fonts/",
     "buildDir": "fonts/",
     "extentions": "*.{woff,woff2}"
+  },
+  
+  "assets": {
+    "devDir": "assets/",
+    "buildDir": "assets/"
   }
 }
