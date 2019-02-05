@@ -12,22 +12,26 @@ const mode = require('./mode.js');
 const SRC = path.join(config.root.devDir, config.js.devDir);
 
 module.exports = {
-  output: {
-    publicPath: '/js/'
-  },
   mode: mode.isDevelopment ? 'development' : 'production',
-  devtool: mode.isDevelopment ? 'cheap-module-inline-source-map' : false,
+  devtool: mode.isDevelopment ? 'inline-source-map' : false,
   watch: mode.isDevelopment,
 
+  entry: {
+    // You can add multiple entry points
+    main: `./${SRC}main.ts`
+  },
   module: {
     rules: [{
-      test: /\.js$/,
-      include: path.join(__dirname, '..', '..', SRC),
-      loader: 'babel-loader',
-      options: {
-        presets: ['@babel/preset-env']
-      }
+      test: /\.tsx?$/,
+      loader: 'awesome-typescript-loader',
+      include: path.join(__dirname, '..', '..', SRC)
     }]
+  },
+  resolve: {
+    extensions: [ '.ts', '.tsx', '.js', '.jsx' ]
+  },
+  output: {
+    filename: '[name].js'
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin()

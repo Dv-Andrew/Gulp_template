@@ -26,7 +26,7 @@ gulp.task('createFiles', function() {
   var sassVariables = file('_variables.scss', '', { src: true })
     .pipe(gulp.dest(`${SRC}${config.sass.devDir}base`));
 
-  var js = file('main.js', '', { src: true })
+  var js = file('main.ts', '', { src: true })
     .pipe(gulp.dest(`${SRC}${config.js.devDir}`));
 
   return merge(html, css, sass, sassBase, sassVariables, js);

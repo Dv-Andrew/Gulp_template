@@ -11,15 +11,13 @@
     "prod": "cross-env NODE_ENV=production gulp build"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
     "autoprefixer": "^9.3.1",
-    "babel-loader": "^8.0.4",
+    "awesome-typescript-loader": "^5.2.1",
     "browser-sync": "^2.26.3",
     "cross-env": "^5.2.0",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
-    "gulp-clean-css": "^3.10.0",
+    "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-file": "^0.4.0",
     "gulp-htmlmin": "^5.0.1",
@@ -41,6 +39,7 @@
     "path": "^0.12.7",
     "posthtml-include": "^1.2.0",
     "require-dir": "^1.1.0",
+    "typescript": "^3.2.2",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.1.1"
   },

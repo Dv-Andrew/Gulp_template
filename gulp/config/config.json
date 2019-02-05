@@ -22,7 +22,7 @@
   },
 
   "js": {
-    "devDir": "js/",
+    "devDir": "ts/",
     "buildDir": "js/"
   },
 
